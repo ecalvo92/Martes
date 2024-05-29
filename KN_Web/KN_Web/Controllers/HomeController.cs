@@ -8,22 +8,17 @@ namespace KN_Web.Controllers
 {
     public class HomeController : Controller
     {
+        /// <summary>
+        /// Nos redirecciona al inicio de sesión
+        /// </summary>
+        /// <returns></returns>
         public ActionResult Index()
         {
             return View();
         }
 
-        public ActionResult About()
+        public ActionResult Home()
         {
-            ViewBag.Message = "Your application description page.";
-
-            return View();
-        }
-
-        public ActionResult Contact()
-        {
-            ViewBag.Message = "Your contact page.";
-
             return View();
         }
     }
