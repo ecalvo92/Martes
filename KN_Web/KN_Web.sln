@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.10.34916.146
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KN_Web", "KN_Web\KN_Web.csproj", "{DDCDC627-9FD5-4372-B82C-B256B33D7299}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{DDCDC627-9FD5-4372-B82C-B256B33D7299}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DDCDC627-9FD5-4372-B82C-B256B33D7299}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DDCDC627-9FD5-4372-B82C-B256B33D7299}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DDCDC627-9FD5-4372-B82C-B256B33D7299}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {8BE646AC-7FCD-4D29-9D6B-16CB6DCCA35B}
+	EndGlobalSection
+EndGlobal
