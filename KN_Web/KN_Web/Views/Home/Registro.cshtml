@@ -11,12 +11,9 @@
 
         @using (Html.BeginForm("Registro", "Home"))
         {
-            //Nombre
-            //Correo
-            //Contraseña
-
             <div class="input-group mb-3">
-                @Html.TextBoxFor(m => m.Identificacion, new { @type = "text", @class = "form-control", @placeholder = "Identificación" })
+                @Html.TextBoxFor(m => m.Identificacion, new { @type = "text", @class = "form-control", @placeholder = "Identificación",
+                    onkeyup = "ConsultarIdentificacion();"})
                 <div class="input-group-append">
                     <div class="input-group-text">
                         <span class="fas fa-user"></span>
@@ -24,7 +21,7 @@
                 </div>
             </div>
             <div class="input-group mb-3">
-                @Html.TextBoxFor(m => m.Nombre, new { @type = "text", @class="form-control", @placeholder="Nombre"})
+                @Html.TextBoxFor(m => m.Nombre, new { @type = "text", @class="form-control", @placeholder="Nombre", @readOnly=true})
                 <div class="input-group-append">
                     <div class="input-group-text">
                         <span class="fas fa-user"></span>
@@ -49,7 +46,6 @@
             </div>
             <div class="row">
                 <div class="col-8">
-
                 </div>
                 <div class="col-4">
                     <button type="submit" class="btn btn-primary btn-block">Procesar</button>
@@ -57,7 +53,29 @@
             </div>
         }
 
-
         <a href="@Url.Action("Index","Home")" class="text-center">Iniciar Sesión</a>
     </div>
 </div>
+
+<script>
+
+    function ConsultarIdentificacion() {
+
+        let identificacion = $("#Identificacion").val();
+
+        if (identificacion.length >= 9) {
+            $.ajax({
+                type: 'GET',
+                url: 'https://apis.gometa.org/cedulas/' + identificacion,
+                dataType: 'json',
+                success: function (data) {
+                    $("#Nombre").val(data.nombre);
+                }
+            });
+        }
+        else {
+            $("#Nombre").val("");
+        }
+    }
+
+</script>
