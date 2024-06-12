@@ -1,0 +1,46 @@
+﻿@model KN_Web.Entidades.Usuario
+
+@{
+    Layout = "~/Views/Shared/_LayoutExterno.cshtml";
+    ViewBag.Title = "Home Page";
+}
+
+<div class="card">
+    <div class="card-body login-card-body">
+        <p class="login-box-msg">Iniciar Sesión</p>
+
+        @using (Html.BeginForm("Index", "Usuario"))
+        {
+            <div class="input-group mb-3">
+                @Html.TextBoxFor(m => m.Correo, new { @type = "email", @class = "form-control", @placeholder = "Correo Electrónico" })
+                <div class="input-group-append">
+                    <div class="input-group-text">
+                        <span class="fas fa-envelope"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="input-group mb-3">
+                @Html.TextBoxFor(m => m.Contrasenna, new { @type = "password", @class = "form-control", @placeholder = "Contraseña" })
+                <div class="input-group-append">
+                    <div class="input-group-text">
+                        <span class="fas fa-lock"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-8">
+                </div>
+                <div class="col-4">
+                    <button type="submit" class="btn btn-primary btn-block">Procesar</button>
+                </div>
+            </div>
+        }
+
+        <p class="mb-1">
+            <a href="forgot-password.html">Olvidé mi contraseña</a>
+        </p>
+        <p class="mb-0">
+            <a href="@Url.Action("Registro","Usuario")" class="text-center">Crear una cuenta</a>
+        </p>
+    </div>
+</div>

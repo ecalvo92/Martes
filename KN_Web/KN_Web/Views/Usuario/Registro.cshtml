@@ -2,15 +2,32 @@
 
 @{
     Layout = "~/Views/Shared/_LayoutExterno.cshtml";
-    ViewBag.Title = "Home Page";
+    ViewBag.Title = "Registro";
 }
 
 <div class="card">
-    <div class="card-body login-card-body">
-        <p class="login-box-msg">Iniciar Sesión</p>
+    <div class="card-body register-card-body">
+        <p class="login-box-msg">Registro</p>
 
-        @using (Html.BeginForm("Index", "Home"))
+        @using (Html.BeginForm("Registro", "Usuario"))
         {
+            <div class="input-group mb-3">
+                @Html.TextBoxFor(m => m.Identificacion, new { @type = "text", @class = "form-control", @placeholder = "Identificación",
+                    onkeyup = "ConsultarIdentificacion();"})
+                <div class="input-group-append">
+                    <div class="input-group-text">
+                        <span class="fas fa-user"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="input-group mb-3">
+                @Html.TextBoxFor(m => m.Nombre, new { @type = "text", @class="form-control", @placeholder="Nombre", @readOnly=true})
+                <div class="input-group-append">
+                    <div class="input-group-text">
+                        <span class="fas fa-user"></span>
+                    </div>
+                </div>
+            </div>
             <div class="input-group mb-3">
                 @Html.TextBoxFor(m => m.Correo, new { @type = "email", @class = "form-control", @placeholder = "Correo Electrónico" })
                 <div class="input-group-append">
@@ -36,11 +53,8 @@
             </div>
         }
 
-        <p class="mb-1">
-            <a href="forgot-password.html">Olvidé mi contraseña</a>
-        </p>
-        <p class="mb-0">
-            <a href="@Url.Action("Registro","Home")" class="text-center">Crear una cuenta</a>
-        </p>
+        <a href="@Url.Action("Index","Usuario")" class="text-center">Iniciar Sesión</a>
     </div>
 </div>
+
+<script src="~/root/funciones/Usuario.js"></script>
