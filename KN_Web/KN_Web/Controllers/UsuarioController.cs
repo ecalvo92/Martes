@@ -26,7 +26,10 @@ namespace KN_Web.Controllers
             if (respuesta)
                 return RedirectToAction("Home", "Usuario");
             else
+            {
+                ViewBag.msj = "Su información no es correcta";
                 return View();
+            }
         }
 
 
@@ -44,7 +47,10 @@ namespace KN_Web.Controllers
             if (respuesta)
                 return RedirectToAction("Index", "Usuario");
             else
+            {
+                ViewBag.msj = "Su información no se ha registrado";
                 return View();
+            }
         }
 
 

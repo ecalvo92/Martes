@@ -9,11 +9,23 @@
     <div class="card-body register-card-body">
         <p class="login-box-msg">Registro</p>
 
+        @if (ViewBag.msj != null)
+        {
+            <div class="alert alert-info" role="alert" style="text-align:center">
+                @ViewBag.msj
+            </div>
+        }
+
         @using (Html.BeginForm("Registro", "Usuario"))
         {
             <div class="input-group mb-3">
-                @Html.TextBoxFor(m => m.Identificacion, new { @type = "text", @class = "form-control", @placeholder = "Identificación",
-                    onkeyup = "ConsultarIdentificacion();"})
+                @Html.TextBoxFor(m => m.Identificacion, new
+                {
+                    @type = "text",
+                    @class = "form-control",
+                    @placeholder = "Identificación",
+                    onkeyup = "ConsultarIdentificacion();"
+                })
                 <div class="input-group-append">
                     <div class="input-group-text">
                         <span class="fas fa-user"></span>
@@ -21,7 +33,7 @@
                 </div>
             </div>
             <div class="input-group mb-3">
-                @Html.TextBoxFor(m => m.Nombre, new { @type = "text", @class="form-control", @placeholder="Nombre", @readOnly=true})
+                @Html.TextBoxFor(m => m.Nombre, new { @type = "text", @class = "form-control", @placeholder = "Nombre", @readOnly = true })
                 <div class="input-group-append">
                     <div class="input-group-text">
                         <span class="fas fa-user"></span>

@@ -9,6 +9,13 @@
     <div class="card-body login-card-body">
         <p class="login-box-msg">Iniciar Sesión</p>
 
+        @if(ViewBag.msj != null)
+        { 
+        <div class="alert alert-info" role="alert" style="text-align:center">
+            @ViewBag.msj
+        </div>
+        }
+
         @using (Html.BeginForm("Index", "Usuario"))
         {
             <div class="input-group mb-3">
