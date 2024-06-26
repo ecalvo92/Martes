@@ -157,6 +157,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\FiltroSeguridad.cs" />
     <Compile Include="Models\UsuarioModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -202,6 +203,7 @@
     <Content Include="root\dist\css\alt\adminlte.pages.min.css" />
     <Content Include="root\dist\css\alt\adminlte.plugins.css" />
     <Content Include="root\dist\css\alt\adminlte.plugins.min.css" />
+    <Content Include="root\dist\css\styles.css" />
     <Content Include="root\dist\img\AdminLTELogo.png" />
     <Content Include="root\dist\img\avatar.png" />
     <Content Include="root\dist\img\avatar04.png" />
@@ -343,6 +345,7 @@
     <Content Include="Views\Shared\_LayoutExterno.cshtml" />
     <Content Include="Views\Usuario\Home.cshtml" />
     <Content Include="Views\Usuario\Registro.cshtml" />
+    <Content Include="Views\Usuario\ConsultarUsuarios.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

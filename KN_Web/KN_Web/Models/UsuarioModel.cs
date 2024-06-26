@@ -35,10 +35,8 @@ namespace KN_Web.Models
             return (rowsAffected > 0 ? true : false);
         }
 
-        public bool IniciarSesion(Usuario user)
+        public IniciarSesion_Result IniciarSesion(Usuario user)
         {
-            var rowCount = 0;
-
             //using (var context = new MARTES_BDEntities())
             //{
             //    rowsCount = (from x in context.tUsuario
@@ -50,10 +48,17 @@ namespace KN_Web.Models
 
             using (var context = new MARTES_BDEntities())
             {
-                rowCount = context.IniciarSesion(user.Correo, user.Contrasenna).ToList().Count();
+                return context.IniciarSesion(user.Correo, user.Contrasenna).FirstOrDefault();
             }
+        }
 
-            return (rowCount > 0 ? true : false);
+        public List<tUsuario> ConsultarUsuarios()
+        {
+            using (var context = new MARTES_BDEntities())
+            {
+                return (from x in context.tUsuario
+                             select x).ToList();
+            }
         }
 
     }

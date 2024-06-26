@@ -1,0 +1,53 @@
+﻿@model List<KN_Web.BaseDatos.tUsuario>
+
+@{
+    ViewBag.Title = "ConsultarUsuarios";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<br>
+<div class="row">
+    <div class="col-12">
+
+        <table id="tablaUsuarios" class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Identificación</th>
+                    <th>Nombre</th>
+                    <th>Correo</th>
+                    <th>Estado</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@item.Identificacion</td>
+                        <td>@item.Nombre</td>
+                        <td>@item.Correo</td>
+                        @if (item.Estado)
+                        {
+                            <td>Activo</td>
+                        }
+                        else
+                        {
+                            <td>Inactivo</td>
+                        }
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+    </div>
+</div>
+
+<script src="~/root/plugins/jquery/jquery.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $("#tablaUsuarios").DataTable({
+            language: {
+                url: '//cdn.datatables.net/plug-ins/2.0.2/i18n/es-ES.json'
+            }
+        });
+    })
+</script>

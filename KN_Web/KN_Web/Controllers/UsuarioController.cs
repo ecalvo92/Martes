@@ -8,6 +8,7 @@ using System.Web.Mvc;
 
 namespace KN_Web.Controllers
 {
+    [OutputCache(NoStore = true, VaryByParam = "*", Duration = 0)]
     public class UsuarioController : Controller
     {
         UsuarioModel usuarioM = new UsuarioModel();
@@ -23,8 +24,11 @@ namespace KN_Web.Controllers
         {
             var respuesta = usuarioM.IniciarSesion(user);
 
-            if (respuesta)
+            if (respuesta != null)
+            {
+                Session["NombreUsuario"] = respuesta.Nombre;
                 return RedirectToAction("Home", "Usuario");
+            }
             else
             {
                 ViewBag.msj = "Su información no es correcta";
@@ -54,11 +58,31 @@ namespace KN_Web.Controllers
         }
 
 
+        [FiltroSeguridad]
         [HttpGet]
         public ActionResult Home()
         {
             return View();
-        } 
+        }
+
+
+        [FiltroSeguridad]
+        [HttpGet]
+        public ActionResult CerrarSesion()
+        {
+            Session.Clear();
+            return RedirectToAction("Index", "Usuario");
+        }
+
+
+        [FiltroSeguridad]
+        [HttpGet]
+        public ActionResult ConsultarUsuarios()
+        {
+            var respuesta = usuarioM.ConsultarUsuarios();
+            return View(respuesta);
+        }
+
 
     }
 }

@@ -3,12 +3,16 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>AdminLTE 3 | Blank Page</title>
+    <title>Proyecto Web</title>
+
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="~/root/plugins/fontawesome-free/css/all.min.css" rel="stylesheet" />
     <link href="~/root/dist/css/adminlte.min.css" rel="stylesheet" />
+    <link href="~/root/dist/css/styles.css" rel="stylesheet" />
     <link href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.css" rel="stylesheet">
+    <link href="https://cdn.datatables.net/2.0.8/css/dataTables.bootstrap4.css" rel="stylesheet">
 </head>
 <body class="hold-transition sidebar-mini">
 
@@ -32,31 +36,29 @@
             </form>
 
             <ul class="navbar-nav ml-auto">
-
                 <li class="nav-item dropdown">
                     <a class="nav-link" data-toggle="dropdown" href="#">
-                        <i class="far fa-bell"></i>
-                        <span class="badge badge-warning navbar-badge">15</span>
+
+                        @Session["NombreUsuario"].ToString()
+                        <i class="far fa-user ml-2"></i>
                     </a>
                     <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
-                        <span class="dropdown-item dropdown-header">15 Notifications</span>
+                        <span class="dropdown-item dropdown-header"></span>
                         <div class="dropdown-divider"></div>
                         <a href="#" class="dropdown-item">
-                            <i class="fas fa-envelope mr-2"></i> 4 new messages
-                            <span class="float-right text-muted text-sm">3 mins</span>
+                            <i class="fas fa-users mr-2"></i> Perfil
+                            <span class="float-right text-muted text-sm"></span>
                         </a>
                         <div class="dropdown-divider"></div>
                         <a href="#" class="dropdown-item">
-                            <i class="fas fa-users mr-2"></i> 8 friend requests
-                            <span class="float-right text-muted text-sm">12 hours</span>
+                            <i class="fas fa-lock mr-2"></i> Seguridad
+                            <span class="float-right text-muted text-sm"></span>
                         </a>
                         <div class="dropdown-divider"></div>
-                        <a href="#" class="dropdown-item">
-                            <i class="fas fa-file mr-2"></i> 3 new reports
-                            <span class="float-right text-muted text-sm">2 days</span>
+                        <a href="@Url.Action("CerrarSesion","Usuario")" class="dropdown-item">
+                            <i class="fas fa-door-open mr-2"></i> Cerrar Sesión
+                            <span class="float-right text-muted text-sm"></span>
                         </a>
-                        <div class="dropdown-divider"></div>
-                        <a href="#" class="dropdown-item dropdown-footer">See All Notifications</a>
                     </div>
                 </li>
             </ul>
@@ -68,34 +70,25 @@
                      alt="AdminLTE Logo"
                      class="brand-image img-circle elevation-3"
                      style="opacity: .8">
-                <span class="brand-text font-weight-light">AdminLTE 3</span>
+                <span class="brand-text font-weight-light">Sistema Web</span>
             </a>
 
             <div class="sidebar">
-                <div class="user-panel mt-3 pb-3 mb-3 d-flex">
-                    <div class="image">
-                        <img src="~/root/dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
-                    </div>
-                    <div class="info">
-                        <a href="#" class="d-block">Alexander Pierce</a>
-                    </div>
-                </div>
-
                 <nav class="mt-2">
                     <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
                         <li class="nav-item has-treeview">
                             <a href="#" class="nav-link">
                                 <i class="nav-icon fas fa-tachometer-alt"></i>
                                 <p>
-                                    Dashboard
+                                    Mantenimientos
                                     <i class="right fas fa-angle-left"></i>
                                 </p>
                             </a>
                             <ul class="nav nav-treeview">
                                 <li class="nav-item">
-                                    <a href="../../index.html" class="nav-link">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>Dashboard v1</p>
+                                    <a href="@Url.Action("ConsultarUsuarios","Usuario")" class="nav-link">
+                                        <i class="far fa-users nav-icon"></i>
+                                        <p>Usuarios</p>
                                     </a>
                                 </li>
                             </ul>
@@ -124,6 +117,9 @@
     <script src="~/root/plugins/jquery/jquery.min.js"></script>
     <script src="~/root/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
     <script src="~/root/dist/js/adminlte.min.js"></script>
+
+    <script src="https://cdn.datatables.net/2.0.8/js/dataTables.js"></script>
+    <script src="https://cdn.datatables.net/2.0.8/js/dataTables.bootstrap4.js"></script>
 
 </body>
 </html>
