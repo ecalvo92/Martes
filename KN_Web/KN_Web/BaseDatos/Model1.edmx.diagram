@@ -4,9 +4,9 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="2fa0ff0999ae45cc96e0166397788218" Name="Diagram1">
+      <Diagram DiagramId="ec2de4f2b4cf4bac9cdeaa99b055f7a0" Name="Diagram1">
         <EntityTypeShape EntityType="MARTES_BDModel.tRol" Width="1.5" PointX="0.75" PointY="1.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="MARTES_BDModel.tUsuario" Width="1.5" PointX="4.875" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MARTES_BDModel.tUsuario" Width="1.5" PointX="3" PointY="1" IsExpanded="true" />
         <AssociationConnector Association="MARTES_BDModel.FK_tUsuario_tRol" ManuallyRouted="false" />
       </Diagram>
     </edmx:Diagrams>

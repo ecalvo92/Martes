@@ -47,6 +47,8 @@ INSERT [dbo].[tUsuario] ([Consecutivo], [Identificacion], [Nombre], [Correo], [C
 GO
 INSERT [dbo].[tUsuario] ([Consecutivo], [Identificacion], [Nombre], [Correo], [Contrasenna], [Estado], [IdRol]) VALUES (4, N'304590415', N'CALVO CASTILLO EDUARDO JOSE', N'ecalvo90415@ufide.ac.cr', N'90415', 1, 1)
 GO
+INSERT [dbo].[tUsuario] ([Consecutivo], [Identificacion], [Nombre], [Correo], [Contrasenna], [Estado], [IdRol]) VALUES (16, N'117830806', N'JIMENEZ GONZALEZ DIANA VANESSA', N'djimenez30806@ufide.ac.cr', N'30806', 1, 1)
+GO
 SET IDENTITY_INSERT [dbo].[tUsuario] OFF
 GO
 
@@ -54,6 +56,42 @@ ALTER TABLE [dbo].[tUsuario]  WITH CHECK ADD  CONSTRAINT [FK_tUsuario_tRol] FORE
 REFERENCES [dbo].[tRol] ([IdRol])
 GO
 ALTER TABLE [dbo].[tUsuario] CHECK CONSTRAINT [FK_tUsuario_tRol]
+GO
+
+CREATE PROCEDURE [dbo].[ActualizarUsuario]
+	@Identificacion VARCHAR(20),
+	@Nombre VARCHAR(100),
+	@Correo VARCHAR(100),
+	@IdRol TINYINT,
+	@Consecutivo INT
+AS
+BEGIN
+
+	UPDATE	tUsuario
+	   SET	Identificacion = @Identificacion,
+			Nombre = @Nombre,
+			Correo = @Correo,
+			IdRol = @IdRol
+	 WHERE	Consecutivo = @Consecutivo
+
+END
+GO
+
+CREATE PROCEDURE [dbo].[CambiarEstadoUsuario]
+	@Consecutivo INT
+AS
+BEGIN
+	
+	--borrado lógico
+	UPDATE	tUsuario
+	SET		Estado = CASE WHEN Estado = 1 THEN 0 ELSE 1 END
+	WHERE	Consecutivo = @Consecutivo
+
+	--borrado físico
+	--DELETE FROM tUsuario 
+	--WHERE	Consecutivo = @Consecutivo
+
+END
 GO
 
 CREATE PROCEDURE [dbo].[IniciarSesion]

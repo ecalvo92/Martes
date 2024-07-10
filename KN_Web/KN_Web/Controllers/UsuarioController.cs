@@ -27,6 +27,7 @@ namespace KN_Web.Controllers
             if (respuesta != null)
             {
                 Session["NombreUsuario"] = respuesta.Nombre;
+                Session["ConsecutivoUsuario"] = respuesta.Consecutivo;
                 return RedirectToAction("Home", "Usuario");
             }
             else
@@ -83,6 +84,37 @@ namespace KN_Web.Controllers
             return View(respuesta);
         }
 
+
+        [FiltroSeguridad]
+        [HttpPost]
+        public ActionResult CambiarEstadoUsuario(Usuario user)
+        {
+            var respuesta = usuarioM.CambiarEstadoUsuario(user);
+
+            if (respuesta)
+                return RedirectToAction("ConsultarUsuarios", "Usuario");
+            else
+            {
+                ViewBag.msj = "No se ha podido inactivar la información del usuario";
+                return View();
+            }
+        }
+
+
+        [FiltroSeguridad]
+        [HttpGet]
+        public ActionResult ActualizarUsuario(int Consecutivo)
+        {
+            var respuesta = usuarioM.ConsultarUsuario(Consecutivo);
+            return View(respuesta);
+        }
+
+        [FiltroSeguridad]
+        [HttpPost]
+        public ActionResult ActualizarUsuario(Usuario user)
+        {
+            return View();
+        }
 
     }
 }

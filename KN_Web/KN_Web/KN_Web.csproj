@@ -164,8 +164,8 @@
   <ItemGroup>
     <Content Include="BaseDatos\Model1.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>Model1.Context.cs</LastGenOutput>
       <DependentUpon>Model1.edmx</DependentUpon>
+      <LastGenOutput>Model1.Context.cs</LastGenOutput>
     </Content>
     <Content Include="BaseDatos\Model1.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
@@ -346,6 +346,7 @@
     <Content Include="Views\Usuario\Home.cshtml" />
     <Content Include="Views\Usuario\Registro.cshtml" />
     <Content Include="Views\Usuario\ConsultarUsuarios.cshtml" />
+    <Content Include="Views\Usuario\ActualizarUsuario.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

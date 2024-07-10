@@ -56,9 +56,56 @@ namespace KN_Web.Models
         {
             using (var context = new MARTES_BDEntities())
             {
+                int ConsecutivoSesion = int.Parse(HttpContext.Current.Session["ConsecutivoUsuario"].ToString());
+
                 return (from x in context.tUsuario
-                             select x).ToList();
+                        where x.Consecutivo != ConsecutivoSesion
+                        select x).ToList();
             }
+        }
+
+        public tUsuario ConsultarUsuario(int Consecutivo)
+        {
+            using (var context = new MARTES_BDEntities())
+            {
+                return (from x in context.tUsuario
+                        where x.Consecutivo == Consecutivo
+                        select x).FirstOrDefault();
+            }
+        }
+
+        public bool CambiarEstadoUsuario(Usuario user)
+        {
+            var rowsAffected = 0;
+
+            //using (var context = new MARTES_BDEntities())
+            //{
+            //    var datos = (from x in context.tUsuario
+            //                 where x.Consecutivo == user.Consecutivo
+            //                 select x).FirstOrDefault();
+
+            //    datos.Estado = false;
+            //    rowsAffected = context.SaveChanges();
+            //}
+
+            using (var context = new MARTES_BDEntities())
+            {
+                rowsAffected = context.CambiarEstadoUsuario(user.Consecutivo);
+            }
+
+            return (rowsAffected > 0 ? true : false);
+        }
+
+        public bool ActualizarUsuario(Usuario user)
+        {
+            var rowsAffected = 0;
+
+            using (var context = new MARTES_BDEntities())
+            {
+                rowsAffected = context.ActualizarUsuario(user.Identificacion, user.Nombre, user.Correo, user.IdRol, user.Consecutivo);
+            }
+
+            return (rowsAffected > 0 ? true : false);
         }
 
     }

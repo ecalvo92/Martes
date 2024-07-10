@@ -9,6 +9,13 @@
 <div class="row">
     <div class="col-12">
 
+        @if (ViewBag.msj != null)
+        {
+            <div class="alert alert-info" role="alert" style="text-align:center">
+                @ViewBag.msj
+            </div>
+        }
+
         <table id="tablaUsuarios" class="table table-bordered">
             <thead>
                 <tr>
@@ -16,6 +23,8 @@
                     <th>Nombre</th>
                     <th>Correo</th>
                     <th>Estado</th>
+                    <th>Cambiar Estado</th>
+                    <th>Cambiar Información</th>
                 </tr>
             </thead>
             <tbody>
@@ -33,11 +42,46 @@
                         {
                             <td>Inactivo</td>
                         }
+                        <td style="text-align:center">
+                            <button type="button" class="btn btn-primary AbrirModal" data-toggle="modal" data-target="#ModalUsuarios"
+                                    data-id="@item.Consecutivo" data-name="@item.Nombre">
+                                <i class="fa fa-share-square"></i>
+                            </button>
+                        </td>
+                        <td style="text-align:center">
+                            <a class="btn btn-primary" href="@Url.Action("ActualizarUsuario","Usuario", new { Consecutivo = item.Consecutivo })">
+                                <i class="fa fa-user"></i>
+                            </a>
+                        </td>
                     </tr>
                 }
             </tbody>
         </table>
 
+    </div>
+</div>
+
+<div class="modal fade" id="ModalUsuarios" data-backdrop="static" data-keyboard="false" tabindex="-1"
+     aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Confirmación</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            @using (Html.BeginForm("CambiarEstadoUsuario", "Usuario"))
+            {
+                <div class="modal-body">
+                    @Html.Hidden("Consecutivo", "")
+                    ¿Desea cambiar el estado del usuario <label id="Nombre"></label>?
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary">Procesar</button>
+                </div>
+            }
+        </div>
     </div>
 </div>
 
@@ -50,4 +94,10 @@
             }
         });
     })
+
+    $(document).on("click", ".AbrirModal", function () {
+        $("#Consecutivo").val($(this).attr('data-id'));
+        $("#Nombre").text($(this).attr('data-name'));
+    });
+
 </script>
