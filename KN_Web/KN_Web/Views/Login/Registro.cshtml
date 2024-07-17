@@ -16,7 +16,7 @@
             </div>
         }
 
-        @using (Html.BeginForm("Registro", "Usuario"))
+        @using (Html.BeginForm("Registro", "Login"))
         {
             <div class="input-group mb-3">
                 @Html.TextBoxFor(m => m.Identificacion, new
@@ -65,7 +65,7 @@
             </div>
         }
 
-        <a href="@Url.Action("Index","Usuario")" class="text-center">Iniciar Sesión</a>
+        <a href="@Url.Action("Index","Login")" class="text-center">Iniciar Sesión</a>
     </div>
 </div>
 

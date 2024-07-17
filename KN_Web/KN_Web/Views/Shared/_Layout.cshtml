@@ -42,9 +42,8 @@
                         <i class="far fa-user ml-2"></i>
                     </a>
                     <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
-                        <span class="dropdown-item dropdown-header"></span>
                         <div class="dropdown-divider"></div>
-                        <a href="#" class="dropdown-item">
+                        <a href="@Url.Action("PerfilUsuario","Perfil")" class="dropdown-item">
                             <i class="fas fa-users mr-2"></i> Perfil
                             <span class="float-right text-muted text-sm"></span>
                         </a>
@@ -54,7 +53,7 @@
                             <span class="float-right text-muted text-sm"></span>
                         </a>
                         <div class="dropdown-divider"></div>
-                        <a href="@Url.Action("CerrarSesion","Usuario")" class="dropdown-item">
+                        <a href="@Url.Action("CerrarSesion","Login")" class="dropdown-item">
                             <i class="fas fa-door-open mr-2"></i> Cerrar Sesión
                             <span class="float-right text-muted text-sm"></span>
                         </a>
@@ -64,7 +63,7 @@
         </nav>
 
         <aside class="main-sidebar sidebar-dark-primary elevation-4">
-            <a href="@Url.Action("Home","Usuario")" class="brand-link">
+            <a href="@Url.Action("Home","Login")" class="brand-link">
                 <img src="~/root/dist/img/AdminLTELogo.png"
                      alt="AdminLTE Logo"
                      class="brand-image img-circle elevation-3"
@@ -75,23 +74,28 @@
             <div class="sidebar">
                 <nav class="mt-2">
                     <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-                        <li class="nav-item has-treeview">
-                            <a href="#" class="nav-link">
-                                <i class="nav-icon fas fa-tachometer-alt"></i>
-                                <p>
-                                    Mantenimientos
-                                    <i class="right fas fa-angle-left"></i>
-                                </p>
-                            </a>
-                            <ul class="nav nav-treeview">
-                                <li class="nav-item">
-                                    <a href="@Url.Action("ConsultarUsuarios","Usuario")" class="nav-link">
-                                        <i class="far fa-users nav-icon"></i>
-                                        <p>Usuarios</p>
-                                    </a>
-                                </li>
-                            </ul>
-                        </li>
+                        
+                        @if (Session["RolUsuario"].ToString() == "2")
+                        {
+                            <li class="nav-item has-treeview">
+                                <a href="#" class="nav-link">
+                                    <i class="nav-icon fas fa-tachometer-alt"></i>
+                                    <p>
+                                        Mantenimientos
+                                        <i class="right fas fa-angle-left"></i>
+                                    </p>
+                                </a>
+                                <ul class="nav nav-treeview">
+                                    <li class="nav-item">
+                                        <a href="@Url.Action("ConsultarUsuarios", "Usuario")" class="nav-link">
+                                            <i class="far fa-users nav-icon"></i>
+                                            <p>Usuarios</p>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+                        }
+
                     </ul>
                 </nav>
             </div>

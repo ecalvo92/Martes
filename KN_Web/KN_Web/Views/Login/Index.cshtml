@@ -16,7 +16,7 @@
         </div>
         }
 
-        @using (Html.BeginForm("Index", "Usuario"))
+        @using (Html.BeginForm("Index", "Login"))
         {
             <div class="input-group mb-3">
                 @Html.TextBoxFor(m => m.Correo, new { @type = "email", @class = "form-control", @placeholder = "Correo Electrónico" })
@@ -47,7 +47,7 @@
             <a href="forgot-password.html">Olvidé mi contraseña</a>
         </p>
         <p class="mb-0">
-            <a href="@Url.Action("Registro","Usuario")" class="text-center">Crear una cuenta</a>
+            <a href="@Url.Action("Registro","Login")" class="text-center">Crear una cuenta</a>
         </p>
     </div>
 </div>

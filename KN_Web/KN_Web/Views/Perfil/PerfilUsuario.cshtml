@@ -22,10 +22,10 @@
             </div>
         }
 
-        @using (Html.BeginForm("ActualizarUsuario", "Usuario"))
+        @using (Html.BeginForm("ActualizarPerfil", "Perfil"))
         {
             @Html.HiddenFor(m => m.Consecutivo)
-            
+
             @Html.Label("Identificación")
             <div class="input-group mb-3">
                 @Html.TextBoxFor(m => m.Identificacion, new
@@ -58,16 +58,6 @@
                 <div class="input-group-append">
                     <div class="input-group-text">
                         <span class="fas fa-envelope"></span>
-                    </div>
-                </div>
-            </div>
-
-            @Html.Label("Perfil")
-            <div class="input-group mb-3">
-                @Html.DropDownListFor(m => m.IdRol, ViewBag.Roles as List<SelectListItem>, new { @class = "form-control" })
-                <div class="input-group-append">
-                    <div class="input-group-text">
-                        <span class="fas fa-lock"></span>
                     </div>
                 </div>
             </div>

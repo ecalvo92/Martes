@@ -43,11 +43,13 @@ GO
 
 SET IDENTITY_INSERT [dbo].[tUsuario] ON 
 GO
-INSERT [dbo].[tUsuario] ([Consecutivo], [Identificacion], [Nombre], [Correo], [Contrasenna], [Estado], [IdRol]) VALUES (2, N'305060673', N'SANCHEZ CORNEJO JOEL GEOVANNY', N'jsanchez60673@ufide.ac.cr', N'60673', 1, 1)
+INSERT [dbo].[tUsuario] ([Consecutivo], [Identificacion], [Nombre], [Correo], [Contrasenna], [Estado], [IdRol]) VALUES (2, N'118160975', N'MADRIGAL ABARCA ANDY JULIAN', N'amadrigal60975@ufide.ac.cr', N'60975', 1, 1)
 GO
-INSERT [dbo].[tUsuario] ([Consecutivo], [Identificacion], [Nombre], [Correo], [Contrasenna], [Estado], [IdRol]) VALUES (4, N'304590415', N'CALVO CASTILLO EDUARDO JOSE', N'ecalvo90415@ufide.ac.cr', N'90415', 1, 1)
+INSERT [dbo].[tUsuario] ([Consecutivo], [Identificacion], [Nombre], [Correo], [Contrasenna], [Estado], [IdRol]) VALUES (4, N'304590415', N'CALVO CASTILLO EDUARDO JOSE', N'ecalvo90415@ufide.ac.cr', N'90415', 0, 2)
 GO
-INSERT [dbo].[tUsuario] ([Consecutivo], [Identificacion], [Nombre], [Correo], [Contrasenna], [Estado], [IdRol]) VALUES (16, N'117830806', N'JIMENEZ GONZALEZ DIANA VANESSA', N'djimenez30806@ufide.ac.cr', N'30806', 1, 1)
+INSERT [dbo].[tUsuario] ([Consecutivo], [Identificacion], [Nombre], [Correo], [Contrasenna], [Estado], [IdRol]) VALUES (16, N'117830806', N'JIMENEZ GONZALEZ DIANA VANESSA', N'djimenez30808@ufide.ac.cr2', N'30808', 1, 2)
+GO
+INSERT [dbo].[tUsuario] ([Consecutivo], [Identificacion], [Nombre], [Correo], [Contrasenna], [Estado], [IdRol]) VALUES (19, N'119190738', N'PADILLA RIVAS JOSE ALBERTO', N'jpadilla90738@ufide.ac.cr', N'90738', 1, 1)
 GO
 SET IDENTITY_INSERT [dbo].[tUsuario] OFF
 GO
@@ -71,7 +73,7 @@ BEGIN
 	   SET	Identificacion = @Identificacion,
 			Nombre = @Nombre,
 			Correo = @Correo,
-			IdRol = @IdRol
+			IdRol = CASE WHEN @IdRol = 0 THEN IdRol ELSE @IdRol END
 	 WHERE	Consecutivo = @Consecutivo
 
 END
@@ -117,8 +119,13 @@ CREATE PROCEDURE [dbo].[RegistrarUsuario]
 AS
 BEGIN
 
-	INSERT INTO dbo.tUsuario(Identificacion,Nombre,Correo,Contrasenna,Estado,IdRol)
-    VALUES(@Identificacion,@Nombre,@Correo,@Contrasenna,1,1)
+	IF(NOT EXISTS(SELECT 1 FROM tUsuario WHERE Identificacion = @Identificacion OR Correo = @Correo ))
+	BEGIN
+	
+		INSERT INTO dbo.tUsuario(Identificacion,Nombre,Correo,Contrasenna,Estado,IdRol)
+		VALUES(@Identificacion,@Nombre,@Correo,@Contrasenna,1,1)
+
+	END
 
 END
 GO
