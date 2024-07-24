@@ -152,6 +152,9 @@
     <Compile Include="BaseDatos\tUsuario.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="BaseDatos\ValidarUsuarioIdentificacion_Result.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\PerfilController.cs" />
     <Compile Include="Controllers\UsuarioController.cs" />
@@ -160,6 +163,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\FiltroSeguridad.cs" />
+    <Compile Include="Models\GeneralModel.cs" />
     <Compile Include="Models\RolModel.cs" />
     <Compile Include="Models\UsuarioModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -194,6 +198,7 @@
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Password.html" />
     <Content Include="root\dist\css\adminlte.css" />
     <Content Include="root\dist\css\adminlte.min.css" />
     <Content Include="root\dist\css\alt\adminlte.components.css" />
@@ -351,6 +356,7 @@
     <Content Include="Views\Usuario\ConsultarUsuarios.cshtml" />
     <Content Include="Views\Usuario\ActualizarUsuario.cshtml" />
     <Content Include="Views\Perfil\PerfilUsuario.cshtml" />
+    <Content Include="Views\Login\RecuperarAcceso.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

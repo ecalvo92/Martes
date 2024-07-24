@@ -37,7 +37,7 @@ namespace KN_Web.Controllers
         [HttpGet]
         public ActionResult ActualizarUsuario(int Consecutivo)
         {
-            var respuesta = usuarioM.ConsultarUsuario(Consecutivo);
+            var respuesta = usuarioM.ConsultarUsuarioConsecutivo(Consecutivo);
             var roles = rolM.ConsultarRoles();
 
             List<SelectListItem> lstRoles = new List<SelectListItem>();

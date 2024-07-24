@@ -2,7 +2,10 @@
 using KN_Web.Entidades;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
+using System.Net.Mail;
+using System.Text;
 using System.Web;
 
 namespace KN_Web.Models
@@ -64,13 +67,21 @@ namespace KN_Web.Models
             }
         }
 
-        public tUsuario ConsultarUsuario(int Consecutivo)
+        public tUsuario ConsultarUsuarioConsecutivo(int Consecutivo)
         {
             using (var context = new MARTES_BDEntities())
             {
                 return (from x in context.tUsuario
                         where x.Consecutivo == Consecutivo
                         select x).FirstOrDefault();
+            }
+        }
+
+        public ValidarUsuarioIdentificacion_Result ConsultarUsuarioIdentificacion(string Identificacion)
+        {
+            using (var context = new MARTES_BDEntities())
+            {
+                return context.ValidarUsuarioIdentificacion(Identificacion).FirstOrDefault();
             }
         }
 
@@ -103,6 +114,25 @@ namespace KN_Web.Models
             using (var context = new MARTES_BDEntities())
             {
                 rowsAffected = context.ActualizarUsuario(user.Identificacion, user.Nombre, user.Correo, user.IdRol, user.Consecutivo);
+            }
+
+            return (rowsAffected > 0 ? true : false);
+        }
+
+        public bool CambiarContrasennaUsuario(int Consecutivo, string contrasennaTemporal, bool EsClaveTemporal, DateTime ClaveVencimiento)
+        {
+            var rowsAffected = 0;
+
+            using (var context = new MARTES_BDEntities())
+            {
+                var datos = (from x in context.tUsuario
+                             where x.Consecutivo == Consecutivo
+                             select x).FirstOrDefault();
+
+                datos.Contrasenna = contrasennaTemporal;
+                datos.EsClaveTemporal = EsClaveTemporal;
+                datos.ClaveVencimiento = ClaveVencimiento;
+                rowsAffected = context.SaveChanges();
             }
 
             return (rowsAffected > 0 ? true : false);

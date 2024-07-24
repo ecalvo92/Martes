@@ -14,7 +14,7 @@ namespace KN_Web.Controllers
         [HttpGet]
         public ActionResult PerfilUsuario()
         {
-            var respuesta = usuarioM.ConsultarUsuario(int.Parse(Session["ConsecutivoUsuario"].ToString()));
+            var respuesta = usuarioM.ConsultarUsuarioConsecutivo(int.Parse(Session["ConsecutivoUsuario"].ToString()));
             return View(respuesta);
         }
 
@@ -31,8 +31,6 @@ namespace KN_Web.Controllers
                 return View();
             }
         }
-
-        
 
     }
 }
