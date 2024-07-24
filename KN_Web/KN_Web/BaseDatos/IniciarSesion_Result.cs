@@ -19,5 +19,7 @@ namespace KN_Web.BaseDatos
         public string Correo { get; set; }
         public bool Estado { get; set; }
         public byte IdRol { get; set; }
+        public Nullable<bool> EsClaveTemporal { get; set; }
+        public Nullable<System.DateTime> ClaveVencimiento { get; set; }
     }
 }

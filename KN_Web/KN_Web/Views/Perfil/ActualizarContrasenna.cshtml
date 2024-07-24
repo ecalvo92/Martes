@@ -1,0 +1,67 @@
+﻿@model KN_Web.Entidades.Usuario
+
+@{
+    ViewBag.Title = "ActualizarUsuario";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<br>
+<h4>Datos de seguridad</h4>
+<hr>
+<br>
+
+<div class="row">
+    <div class="col-3">
+    </div>
+    <div class="col-6">
+
+        @if (ViewBag.msj != null)
+        {
+            <div class="alert alert-info" role="alert" style="text-align:center">
+                @ViewBag.msj
+            </div>
+        }
+
+        @using (Html.BeginForm("ActualizarContrasenna", "Perfil"))
+        {
+            @Html.Label("Contraseña Nueva")
+            <div class="input-group mb-3">
+                @Html.TextBoxFor(m => m.Contrasenna, new
+               {
+                   @type = "password",
+                   @class = "form-control",
+                   @placeholder = "Contraseña Nueva"
+               })
+                <div class="input-group-append">
+                    <div class="input-group-text">
+                        <span class="fas fa-envelope"></span>
+                    </div>
+                </div>
+            </div>
+
+            @Html.Label("Confirmar Contraseña")
+            <div class="input-group mb-3">
+                @Html.TextBoxFor(m => m.ConfirmarContrasenna, new
+               {
+                   @type = "password",
+                   @class = "form-control",
+                   @placeholder = "Confirmar Contraseña"
+               })
+                <div class="input-group-append">
+                    <div class="input-group-text">
+                        <span class="fas fa-envelope"></span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-sm-6 col-md-4 col-lg-4">
+                </div>
+                <div class="col-sm-6 col-md-4 col-lg-3">
+                    <button type="submit" class="btn btn-primary btn-block" style="width:100%">Procesar</button>
+                </div>
+            </div>
+        }
+
+    </div>
+</div>

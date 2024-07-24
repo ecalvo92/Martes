@@ -26,6 +26,12 @@ namespace KN_Web.Controllers
 
             if (respuesta != null)
             {
+                if (respuesta.EsClaveTemporal == true && respuesta.ClaveVencimiento <= DateTime.Now)
+                {
+                    ViewBag.msj = "Su contraseña temporal ha caducado";
+                    return View();
+                }
+
                 Session["NombreUsuario"] = respuesta.Nombre;
                 Session["ConsecutivoUsuario"] = respuesta.Consecutivo;
                 Session["RolUsuario"] = respuesta.IdRol.ToString();
@@ -84,7 +90,6 @@ namespace KN_Web.Controllers
         [HttpPost]
         public ActionResult RecuperarAcceso(Usuario user)
         {
-            //Si existe y obtengo el correo
             var respuesta = usuarioM.ConsultarUsuarioIdentificacion(user.Identificacion);
 
             if (respuesta != null)
@@ -100,7 +105,6 @@ namespace KN_Web.Controllers
                     contenido = contenido.Replace("@@Nombre", respuesta.Nombre);
                     contenido = contenido.Replace("@@Contrasenna", contrasennaTemporal);
                     contenido = contenido.Replace("@@Vencimiento", fechaVencimientoTemporal.ToString("dd/MM/yyyy hh:mm:ss tt"));
-
                     generalM.EnviarCorreo(respuesta.Correo, "Recuperar Acceso SistemaWEB KN", contenido);
                 }
                 

@@ -25,33 +25,13 @@ CREATE TABLE [dbo].[tUsuario](
 	[Contrasenna] [varchar](15) NOT NULL,
 	[Estado] [bit] NOT NULL,
 	[IdRol] [tinyint] NOT NULL,
+	[EsClaveTemporal] [bit] NULL,
+	[ClaveVencimiento] [datetime] NULL,
  CONSTRAINT [PK_tUsuario] PRIMARY KEY CLUSTERED 
 (
 	[Consecutivo] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
-GO
-
-SET IDENTITY_INSERT [dbo].[tRol] ON 
-GO
-INSERT [dbo].[tRol] ([IdRol], [NombreRol]) VALUES (1, N'Usuario')
-GO
-INSERT [dbo].[tRol] ([IdRol], [NombreRol]) VALUES (2, N'Administrador')
-GO
-SET IDENTITY_INSERT [dbo].[tRol] OFF
-GO
-
-SET IDENTITY_INSERT [dbo].[tUsuario] ON 
-GO
-INSERT [dbo].[tUsuario] ([Consecutivo], [Identificacion], [Nombre], [Correo], [Contrasenna], [Estado], [IdRol]) VALUES (2, N'118160975', N'MADRIGAL ABARCA ANDY JULIAN', N'amadrigal60975@ufide.ac.cr', N'60975', 1, 1)
-GO
-INSERT [dbo].[tUsuario] ([Consecutivo], [Identificacion], [Nombre], [Correo], [Contrasenna], [Estado], [IdRol]) VALUES (4, N'304590415', N'CALVO CASTILLO EDUARDO JOSE', N'ecalvo90415@ufide.ac.cr', N'90415', 0, 2)
-GO
-INSERT [dbo].[tUsuario] ([Consecutivo], [Identificacion], [Nombre], [Correo], [Contrasenna], [Estado], [IdRol]) VALUES (16, N'117830806', N'JIMENEZ GONZALEZ DIANA VANESSA', N'djimenez30808@ufide.ac.cr2', N'30808', 1, 2)
-GO
-INSERT [dbo].[tUsuario] ([Consecutivo], [Identificacion], [Nombre], [Correo], [Contrasenna], [Estado], [IdRol]) VALUES (19, N'119190738', N'PADILLA RIVAS JOSE ALBERTO', N'jpadilla90738@ufide.ac.cr', N'90738', 1, 1)
-GO
-SET IDENTITY_INSERT [dbo].[tUsuario] OFF
 GO
 
 ALTER TABLE [dbo].[tUsuario]  WITH CHECK ADD  CONSTRAINT [FK_tUsuario_tRol] FOREIGN KEY([IdRol])
@@ -102,7 +82,7 @@ CREATE PROCEDURE [dbo].[IniciarSesion]
 AS
 BEGIN
 
-	SELECT	Consecutivo,Identificacion,Nombre,Correo,Estado,IdRol
+	SELECT	Consecutivo,Identificacion,Nombre,Correo,Estado,IdRol,EsClaveTemporal,ClaveVencimiento
 	FROM	dbo.tUsuario
 	WHERE	Correo = @Correo
 		AND Contrasenna = @Contrasenna
@@ -122,10 +102,22 @@ BEGIN
 	IF(NOT EXISTS(SELECT 1 FROM tUsuario WHERE Identificacion = @Identificacion OR Correo = @Correo ))
 	BEGIN
 	
-		INSERT INTO dbo.tUsuario(Identificacion,Nombre,Correo,Contrasenna,Estado,IdRol)
-		VALUES(@Identificacion,@Nombre,@Correo,@Contrasenna,1,1)
+		INSERT INTO dbo.tUsuario(Identificacion,Nombre,Correo,Contrasenna,Estado,IdRol,EsClaveTemporal,ClaveVencimiento)
+		VALUES(@Identificacion,@Nombre,@Correo,@Contrasenna,1,1,0,GETDATE())
 
 	END
+
+END
+GO
+
+CREATE PROCEDURE [dbo].[ValidarUsuarioIdentificacion]
+	@Identificacion VARCHAR(20)
+AS
+BEGIN
+
+	SELECT	Consecutivo, Identificacion, Nombre, Correo
+	FROM	tUsuario
+	WHERE	Identificacion = @Identificacion
 
 END
 GO

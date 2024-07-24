@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="MARTES_BDModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="MARTES_BDModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="tRol">
           <Key>
             <PropertyRef Name="IdRol" />
@@ -69,7 +69,8 @@
             <End Role="tUsuario" EntitySet="tUsuario" />
           </AssociationSet>
         </EntityContainer>
-      </Schema></edmx:StorageModels>
+      </Schema>
+    </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="MARTES_BDModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -92,9 +93,9 @@
           <Property Name="Contrasenna" Type="String" MaxLength="15" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Estado" Type="Boolean" Nullable="false" />
           <Property Name="IdRol" Type="Byte" Nullable="false" />
-          <NavigationProperty Name="tRol" Relationship="Self.FK_tUsuario_tRol" FromRole="tUsuario" ToRole="tRol" />
           <Property Name="EsClaveTemporal" Type="Boolean" />
           <Property Name="ClaveVencimiento" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="tRol" Relationship="Self.FK_tUsuario_tRol" FromRole="tUsuario" ToRole="tRol" />
         </EntityType>
         <Association Name="FK_tUsuario_tRol">
           <End Role="tRol" Type="Self.tRol" Multiplicity="1" />
@@ -123,7 +124,7 @@
             <Parameter Name="Consecutivo" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="CambiarEstadoUsuario">
-          <Parameter Name="Consecutivo" Mode="In" Type="Int32" />
+            <Parameter Name="Consecutivo" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="IniciarSesion" ReturnType="Collection(MARTES_BDModel.IniciarSesion_Result)">
             <Parameter Name="Correo" Mode="In" Type="String" />
@@ -136,7 +137,7 @@
             <Parameter Name="Contrasenna" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="ValidarUsuarioIdentificacion" ReturnType="Collection(MARTES_BDModel.ValidarUsuarioIdentificacion_Result)">
-          <Parameter Name="Identificacion" Mode="In" Type="String" />
+            <Parameter Name="Identificacion" Mode="In" Type="String" />
           </FunctionImport>
         </EntityContainer>
         <ComplexType Name="IniciarSesion_Result">
@@ -146,6 +147,8 @@
           <Property Type="String" Name="Correo" Nullable="false" MaxLength="100" />
           <Property Type="Boolean" Name="Estado" Nullable="false" />
           <Property Type="Byte" Name="IdRol" Nullable="false" />
+          <Property Type="Boolean" Name="EsClaveTemporal" Nullable="true" />
+          <Property Type="DateTime" Name="ClaveVencimiento" Nullable="true" Precision="23" />
         </ComplexType>
         <ComplexType Name="ValidarUsuarioIdentificacion_Result">
           <Property Type="Int32" Name="Consecutivo" Nullable="false" />
@@ -170,8 +173,6 @@
           <EntitySetMapping Name="tUsuario">
             <EntityTypeMapping TypeName="MARTES_BDModel.tUsuario">
               <MappingFragment StoreEntitySet="tUsuario">
-                <ScalarProperty Name="ClaveVencimiento" ColumnName="ClaveVencimiento" />
-                <ScalarProperty Name="EsClaveTemporal" ColumnName="EsClaveTemporal" />
                 <ScalarProperty Name="Consecutivo" ColumnName="Consecutivo" />
                 <ScalarProperty Name="Identificacion" ColumnName="Identificacion" />
                 <ScalarProperty Name="Nombre" ColumnName="Nombre" />
@@ -179,6 +180,8 @@
                 <ScalarProperty Name="Contrasenna" ColumnName="Contrasenna" />
                 <ScalarProperty Name="Estado" ColumnName="Estado" />
                 <ScalarProperty Name="IdRol" ColumnName="IdRol" />
+                <ScalarProperty Name="EsClaveTemporal" ColumnName="EsClaveTemporal" />
+                <ScalarProperty Name="ClaveVencimiento" ColumnName="ClaveVencimiento" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -193,6 +196,8 @@
                 <ScalarProperty Name="Correo" ColumnName="Correo" />
                 <ScalarProperty Name="Estado" ColumnName="Estado" />
                 <ScalarProperty Name="IdRol" ColumnName="IdRol" />
+                <ScalarProperty Name="EsClaveTemporal" ColumnName="EsClaveTemporal" />
+                <ScalarProperty Name="ClaveVencimiento" ColumnName="ClaveVencimiento" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
