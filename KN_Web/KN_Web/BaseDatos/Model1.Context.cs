@@ -29,6 +29,9 @@ namespace KN_Web.BaseDatos
     
         public virtual DbSet<tRol> tRol { get; set; }
         public virtual DbSet<tUsuario> tUsuario { get; set; }
+        public virtual DbSet<tCategoria> tCategoria { get; set; }
+        public virtual DbSet<tProducto> tProducto { get; set; }
+        public virtual DbSet<tCarrito> tCarrito { get; set; }
     
         public virtual int ActualizarUsuario(string identificacion, string nombre, string correo, Nullable<byte> idRol, Nullable<int> consecutivo)
         {
@@ -105,6 +108,28 @@ namespace KN_Web.BaseDatos
                 new ObjectParameter("Identificacion", typeof(string));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<ValidarUsuarioIdentificacion_Result>("ValidarUsuarioIdentificacion", identificacionParameter);
+        }
+    
+        public virtual ObjectResult<ConsultarProductos_Result> ConsultarProductos()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<ConsultarProductos_Result>("ConsultarProductos");
+        }
+    
+        public virtual int RegistrarCarrito(Nullable<int> consecutivo, Nullable<int> idProducto, Nullable<int> cantidad)
+        {
+            var consecutivoParameter = consecutivo.HasValue ?
+                new ObjectParameter("Consecutivo", consecutivo) :
+                new ObjectParameter("Consecutivo", typeof(int));
+    
+            var idProductoParameter = idProducto.HasValue ?
+                new ObjectParameter("IdProducto", idProducto) :
+                new ObjectParameter("IdProducto", typeof(int));
+    
+            var cantidadParameter = cantidad.HasValue ?
+                new ObjectParameter("Cantidad", cantidad) :
+                new ObjectParameter("Cantidad", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("RegistrarCarrito", consecutivoParameter, idProductoParameter, cantidadParameter);
         }
     }
 }

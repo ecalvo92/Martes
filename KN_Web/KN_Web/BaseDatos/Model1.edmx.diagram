@@ -8,6 +8,12 @@
         <EntityTypeShape EntityType="MARTES_BDModel.tRol" Width="1.5" PointX="0.75" PointY="1.625" IsExpanded="true" />
         <EntityTypeShape EntityType="MARTES_BDModel.tUsuario" Width="1.5" PointX="3" PointY="1" IsExpanded="true" />
         <AssociationConnector Association="MARTES_BDModel.FK_tUsuario_tRol" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="MARTES_BDModel.tCategoria" Width="1.5" PointX="0.75" PointY="5.375" />
+        <EntityTypeShape EntityType="MARTES_BDModel.tProducto" Width="1.5" PointX="3" PointY="5" />
+        <AssociationConnector Association="MARTES_BDModel.FK_tProducto_tCategoria" />
+        <EntityTypeShape EntityType="MARTES_BDModel.tCarrito" Width="1.5" PointX="6.25" PointY="1.125" />
+        <AssociationConnector Association="MARTES_BDModel.FK_tCarrito_tProducto" />
+        <AssociationConnector Association="MARTES_BDModel.FK_tCarrito_tUsuario" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

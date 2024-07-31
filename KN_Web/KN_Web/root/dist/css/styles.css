@@ -5,3 +5,8 @@
 .content-wrapper {
     background: white!important;
 }
+
+.content-wrapper {
+    padding-left: 25px;
+    padding-right: 25px;
+}

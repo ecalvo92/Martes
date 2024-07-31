@@ -1,5 +1,103 @@
-﻿@{
+﻿@model List<KN_Web.BaseDatos.tProducto>
+
+@{
     Layout = "~/Views/Shared/_Layout.cshtml";
     ViewBag.Title = "Home";
 }
 
+<br>
+<h4>Consulta de usuarios</h4>
+<hr>
+<br>
+
+<div class="row">
+    <div class="col-12">
+
+        @if (ViewBag.msj != null)
+        {
+            <div class="alert alert-info" role="alert" style="text-align:center">
+                @ViewBag.msj
+            </div>
+        }
+
+        <div class="row">
+
+            @foreach (var item in Model)
+            {
+                <div class="col-lg-4 col-md-6 col-sm-12" style="margin-bottom:20px">
+                    <div class="card">
+                        <div style="text-align:center">
+                            <img class="card-img-top" src="@item.Imagen" style="width: 200px; height:150px; margin-top:20px">
+                        </div>
+                        <div class="card-body">
+
+
+                            <ul class="list-group list-group-flush">
+                                <li class="list-group-item"> <h5 class="card-title">@item.Descripcion</h5></li>
+                                <li class="list-group-item">Categoría: @item.tCategoria.Descripcion</li>
+                                <li class="list-group-item">Inventario: @item.Inventario</li>
+                                <li class="list-group-item">Precio: @item.Precio.ToString("N2")</li>
+                            </ul>
+
+                            <div class="card-body row">
+                                <div class="col-2">
+                                </div>
+                                <div class="col-4">
+                                    <input id=prd-@item.IdProducto type="number" class="form-control" style="text-align:center" value="1" min="1" max="@item.Inventario"
+                                           onkeypress="return ValidarNumeros(this.id)">
+                                </div>
+                                <div class="col-4">
+                                    <a onclick="AgregarProducto(@item.IdProducto, @item.Inventario);" class="card-link btn btn-outline-primary">Agregar</a>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            }
+
+        </div>
+
+    </div>
+</div>
+
+<script>
+
+    function ValidarNumeros(evt) {
+        var charCode = (evt.which) ? evt.which : event.keyCode;
+
+        if (charCode >= 48 && charCode <= 57) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+
+    function AgregarProducto(IdProducto, Inventario) {
+
+        let cantidadIngresada = $("#prd-" + IdProducto).val();
+
+        if (cantidadIngresada > Inventario) {
+            MostrarMensaje("Información","Debe ingresar una cantidad inferior al inventario","info");
+            return;
+        }
+
+        if (cantidadIngresada <= 0) {
+            MostrarMensaje("Información", "Debe ingresar una cantidad válida", "info");
+            return;
+        }
+
+        //Ajax para llamar al controlador y que se registre el producto en el carrito
+
+    }
+
+    function MostrarMensaje(titulo, mensaje, icono) {
+        Swal.fire({
+            title: titulo,
+            text: mensaje,
+            icon: icono
+        });
+    }
+
+</script>

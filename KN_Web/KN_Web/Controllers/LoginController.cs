@@ -10,7 +10,8 @@ namespace KN_Web.Controllers
     {
         UsuarioModel usuarioM = new UsuarioModel();
         GeneralModel generalM = new GeneralModel();
-
+        ProductoModel productoM = new ProductoModel();
+        CarritoModel carritoM = new CarritoModel();
 
         //Iniciar Sesión
         [HttpGet]
@@ -124,10 +125,17 @@ namespace KN_Web.Controllers
         [HttpGet]
         public ActionResult Home()
         {
-            return View();
+            var respuesta = productoM.ConsultarProductos();
+            return View(respuesta);
         }
 
-
+        [FiltroSeguridad]
+        [HttpPost]
+        public ActionResult RegistrarCarrito()
+        {
+            carritoM.RegistrarCarrito(0,0);
+            return View();
+        }
 
     }
 }

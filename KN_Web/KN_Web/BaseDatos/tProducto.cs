@@ -12,25 +12,22 @@ namespace KN_Web.BaseDatos
     using System;
     using System.Collections.Generic;
     
-    public partial class tUsuario
+    public partial class tProducto
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public tUsuario()
+        public tProducto()
         {
             this.tCarrito = new HashSet<tCarrito>();
         }
     
-        public int Consecutivo { get; set; }
-        public string Identificacion { get; set; }
-        public string Nombre { get; set; }
-        public string Correo { get; set; }
-        public string Contrasenna { get; set; }
-        public bool Estado { get; set; }
-        public byte IdRol { get; set; }
-        public Nullable<bool> EsClaveTemporal { get; set; }
-        public Nullable<System.DateTime> ClaveVencimiento { get; set; }
+        public int IdProducto { get; set; }
+        public string Descripcion { get; set; }
+        public int Inventario { get; set; }
+        public decimal Precio { get; set; }
+        public string Imagen { get; set; }
+        public int IdCategoria { get; set; }
     
-        public virtual tRol tRol { get; set; }
+        public virtual tCategoria tCategoria { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<tCarrito> tCarrito { get; set; }
     }
