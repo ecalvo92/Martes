@@ -170,6 +170,7 @@
     <Compile Include="BaseDatos\ValidarUsuarioIdentificacion_Result.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="Controllers\CarritoController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\PerfilController.cs" />
     <Compile Include="Controllers\UsuarioController.cs" />
@@ -375,6 +376,7 @@
     <Content Include="Views\Perfil\PerfilUsuario.cshtml" />
     <Content Include="Views\Login\RecuperarAcceso.cshtml" />
     <Content Include="Views\Perfil\ActualizarContrasenna.cshtml" />
+    <Content Include="Views\Carrito\ConsultarCarrito.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

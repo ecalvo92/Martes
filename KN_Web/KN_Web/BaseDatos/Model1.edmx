@@ -120,6 +120,9 @@
           <Parameter Name="Correo" Type="varchar" Mode="In" />
           <Parameter Name="Contrasenna" Type="varchar" Mode="In" />
         </Function>
+        <Function Name="PagarCarrito" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Consecutivo" Type="int" Mode="In" />
+        </Function>
         <Function Name="RegistrarCarrito" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="Consecutivo" Type="int" Mode="In" />
           <Parameter Name="IdProducto" Type="int" Mode="In" />
@@ -249,6 +252,9 @@
             <Parameter Name="Cantidad" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="ConsultarCarrito" ReturnType="Collection(MARTES_BDModel.ConsultarCarrito_Result)">
+          <Parameter Name="Consecutivo" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="PagarCarrito">
             <Parameter Name="Consecutivo" Mode="In" Type="Int32" />
           </FunctionImport>
         </EntityContainer>
@@ -477,6 +483,7 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="PagarCarrito" FunctionName="MARTES_BDModel.Store.PagarCarrito" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

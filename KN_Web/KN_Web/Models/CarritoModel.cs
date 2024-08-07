@@ -31,5 +31,18 @@ namespace KN_Web.Models
             }
         }
 
+        public bool PagarCarrito()
+        {
+            var rowsAffected = 0;
+
+            using (var context = new MARTES_BDEntities())
+            {
+                int Consecutivo = int.Parse(HttpContext.Current.Session["ConsecutivoUsuario"].ToString());
+                rowsAffected = context.PagarCarrito(Consecutivo);
+            }
+
+            return (rowsAffected > 0 ? true : false);
+        }
+
     }
 }

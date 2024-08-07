@@ -126,10 +126,7 @@ namespace KN_Web.Controllers
         [HttpGet]
         public ActionResult Home()
         {
-            var carritoActual = carritoM.ConsultarCarrito();
-            Session["Cantidad"] = carritoActual.Sum(c => c.Cantidad);
-            Session["SubTotal"] = carritoActual.Sum(c => c.SubTotal);
-
+            CargarVariablesCarrito();
             var respuesta = productoM.ConsultarProductos();
             return View(respuesta);
         }
@@ -139,12 +136,16 @@ namespace KN_Web.Controllers
         public ActionResult RegistrarCarrito(int IdProducto, int Cantidad)
         {
             carritoM.RegistrarCarrito(IdProducto, Cantidad);
+            CargarVariablesCarrito();
+            return Json("",JsonRequestBehavior.AllowGet);
+        }
 
+        private void CargarVariablesCarrito()
+        {
             var carritoActual = carritoM.ConsultarCarrito();
             Session["Cantidad"] = carritoActual.Sum(c => c.Cantidad);
             Session["SubTotal"] = carritoActual.Sum(c => c.SubTotal);
-
-            return Json("",JsonRequestBehavior.AllowGet);
+            Session["Total"] = carritoActual.Sum(c => c.Total);
         }
 
     }

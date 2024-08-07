@@ -30,6 +30,36 @@ CREATE TABLE [dbo].[tCategoria](
 ) ON [PRIMARY]
 GO
 
+CREATE TABLE [dbo].[tDetalle](
+	[IdDetale] [int] IDENTITY(1,1) NOT NULL,
+	[IdMaestro] [int] NOT NULL,
+	[IdProducto] [int] NOT NULL,
+	[Cantidad] [int] NOT NULL,
+	[PrecioUnitario] [decimal](18, 2) NOT NULL,
+	[SubTotal] [decimal](18, 2) NOT NULL,
+	[Impuesto] [decimal](18, 2) NOT NULL,
+	[Total] [decimal](18, 2) NOT NULL,
+ CONSTRAINT [PK_tDetalle] PRIMARY KEY CLUSTERED 
+(
+	[IdDetale] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+
+CREATE TABLE [dbo].[tMaestro](
+	[IdMaestro] [int] IDENTITY(1,1) NOT NULL,
+	[Consecutivo] [int] NOT NULL,
+	[FechaCompra] [datetime] NOT NULL,
+	[SubTotal] [decimal](18, 2) NOT NULL,
+	[Impuesto] [decimal](18, 2) NOT NULL,
+	[Total] [decimal](18, 2) NOT NULL,
+ CONSTRAINT [PK_tMaestro] PRIMARY KEY CLUSTERED 
+(
+	[IdMaestro] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+
 CREATE TABLE [dbo].[tProducto](
 	[IdProducto] [int] IDENTITY(1,1) NOT NULL,
 	[Descripcion] [varchar](250) NOT NULL,
@@ -71,6 +101,13 @@ CREATE TABLE [dbo].[tUsuario](
 ) ON [PRIMARY]
 GO
 
+SET IDENTITY_INSERT [dbo].[tCarrito] ON 
+GO
+INSERT [dbo].[tCarrito] ([IdCarrito], [Consecutivo], [IdProducto], [Cantidad], [Fecha]) VALUES (11, 2, 3, 1, CAST(N'2024-08-06T21:01:39.840' AS DateTime))
+GO
+SET IDENTITY_INSERT [dbo].[tCarrito] OFF
+GO
+
 SET IDENTITY_INSERT [dbo].[tCategoria] ON 
 GO
 INSERT [dbo].[tCategoria] ([IdCategoria], [Descripcion]) VALUES (1, N'Periféricos')
@@ -82,11 +119,27 @@ GO
 SET IDENTITY_INSERT [dbo].[tCategoria] OFF
 GO
 
+SET IDENTITY_INSERT [dbo].[tDetalle] ON 
+GO
+INSERT [dbo].[tDetalle] ([IdDetale], [IdMaestro], [IdProducto], [Cantidad], [PrecioUnitario], [SubTotal], [Impuesto], [Total]) VALUES (1, 1, 2, 2, CAST(15000.00 AS Decimal(18, 2)), CAST(30000.00 AS Decimal(18, 2)), CAST(3900.00 AS Decimal(18, 2)), CAST(33900.00 AS Decimal(18, 2)))
+GO
+INSERT [dbo].[tDetalle] ([IdDetale], [IdMaestro], [IdProducto], [Cantidad], [PrecioUnitario], [SubTotal], [Impuesto], [Total]) VALUES (2, 1, 3, 3, CAST(50000.00 AS Decimal(18, 2)), CAST(150000.00 AS Decimal(18, 2)), CAST(19500.00 AS Decimal(18, 2)), CAST(169500.00 AS Decimal(18, 2)))
+GO
+SET IDENTITY_INSERT [dbo].[tDetalle] OFF
+GO
+
+SET IDENTITY_INSERT [dbo].[tMaestro] ON 
+GO
+INSERT [dbo].[tMaestro] ([IdMaestro], [Consecutivo], [FechaCompra], [SubTotal], [Impuesto], [Total]) VALUES (1, 2, CAST(N'2024-08-06T20:58:43.827' AS DateTime), CAST(180000.00 AS Decimal(18, 2)), CAST(23400.00 AS Decimal(18, 2)), CAST(203400.00 AS Decimal(18, 2)))
+GO
+SET IDENTITY_INSERT [dbo].[tMaestro] OFF
+GO
+
 SET IDENTITY_INSERT [dbo].[tProducto] ON 
 GO
-INSERT [dbo].[tProducto] ([IdProducto], [Descripcion], [Inventario], [Precio], [Imagen], [IdCategoria]) VALUES (2, N'Mouse Inalámbrico', 5, CAST(15000.00 AS Decimal(10, 2)), N'https://pngimg.es/d/monitor_PNG101656.png', 1)
+INSERT [dbo].[tProducto] ([IdProducto], [Descripcion], [Inventario], [Precio], [Imagen], [IdCategoria]) VALUES (2, N'Mouse Inalámbrico', 3, CAST(15000.00 AS Decimal(10, 2)), N'https://pngimg.es/d/monitor_PNG101656.png', 1)
 GO
-INSERT [dbo].[tProducto] ([IdProducto], [Descripcion], [Inventario], [Precio], [Imagen], [IdCategoria]) VALUES (3, N'Monitor Asus', 4, CAST(50000.00 AS Decimal(10, 2)), N'https://pngimg.es/d/monitor_PNG101656.png', 2)
+INSERT [dbo].[tProducto] ([IdProducto], [Descripcion], [Inventario], [Precio], [Imagen], [IdCategoria]) VALUES (3, N'Monitor Asus', 1, CAST(50000.00 AS Decimal(10, 2)), N'https://pngimg.es/d/monitor_PNG101656.png', 2)
 GO
 INSERT [dbo].[tProducto] ([IdProducto], [Descripcion], [Inventario], [Precio], [Imagen], [IdCategoria]) VALUES (4, N'Tarjeta de Video', 5, CAST(75000.00 AS Decimal(10, 2)), N'https://pngimg.es/d/monitor_PNG101656.png', 3)
 GO
@@ -179,6 +232,30 @@ BEGIN
 END
 GO
 
+CREATE PROCEDURE [dbo].[ConsultarCarrito]
+	@Consecutivo INT
+AS
+BEGIN
+
+	SELECT  IdCarrito,
+		    C.Consecutivo,
+			U.Nombre,
+		    C.IdProducto,
+			P.Descripcion,
+			p.Precio,
+			(p.Precio * Cantidad) SubTotal,
+			(p.Precio * Cantidad) * 0.13 Impuesto,
+			(p.Precio * Cantidad) + (p.Precio * Cantidad) * 0.13 Total,
+		    Cantidad,
+		    Fecha
+	  FROM  dbo.tCarrito C
+	  INNER JOIN dbo.tUsuario U ON C.Consecutivo = U.Consecutivo
+	  INNER JOIN dbo.tProducto P ON C.IdProducto = P.IdProducto
+	  WHERE	C.Consecutivo = @Consecutivo
+
+END
+GO
+
 CREATE PROCEDURE [dbo].[ConsultarProductos]
 
 AS
@@ -212,6 +289,53 @@ BEGIN
 END
 GO
 
+CREATE PROCEDURE [dbo].[PagarCarrito]
+	@Consecutivo INT
+AS
+BEGIN
+	
+	-->MAESTRO
+	INSERT INTO dbo.tMaestro(Consecutivo,FechaCompra,SubTotal,Impuesto,Total)
+    SELECT	Consecutivo, 
+			GETDATE(), 
+			SUM(P.Precio * Cantidad), 
+			SUM(P.Precio * Cantidad) * 0.13, 
+			SUM(P.Precio * Cantidad) + SUM(P.Precio * Cantidad) * 0.13
+	FROM tCarrito C
+	INNER JOIN tProducto P ON C.IdProducto = P.IdProducto
+	WHERE Consecutivo = @Consecutivo
+	GROUP BY Consecutivo
+
+
+	-->DETALLLE
+	INSERT INTO dbo.tDetalle(IdMaestro,IdProducto,Cantidad,PrecioUnitario,SubTotal,Impuesto,Total)
+	SELECT	@@IDENTITY, 
+			C.IdProducto, 
+			Cantidad, 
+			P.Precio, 
+			P.Precio * Cantidad, 
+			(P.Precio * Cantidad) * 0.13, 
+			P.Precio * Cantidad + (P.Precio * Cantidad) * 0.13
+	FROM tCarrito C
+	INNER JOIN tProducto P ON C.IdProducto = P.IdProducto
+	WHERE Consecutivo = @Consecutivo
+
+
+	-->REBAJA DEL INVENTARIO
+	UPDATE P
+	SET Inventario = Inventario - Cantidad
+	FROM tProducto P
+	INNER JOIN tCarrito C ON P.IdProducto = C.IdProducto
+	WHERE Consecutivo = @Consecutivo
+
+
+	-->LIMPIEZA DEL CARRITO
+	DELETE FROM tCarrito
+	WHERE Consecutivo = @Consecutivo
+
+END
+GO
+
 CREATE PROCEDURE [dbo].[RegistrarCarrito]
 	@Consecutivo INT,
     @IdProducto INT,
@@ -219,8 +343,23 @@ CREATE PROCEDURE [dbo].[RegistrarCarrito]
 AS
 BEGIN
 	
-	INSERT INTO tCarrito(Consecutivo,IdProducto,Cantidad,Fecha)
-    VALUES (@Consecutivo,@IdProducto,@Cantidad,GETDATE())
+	IF NOT EXISTS(SELECT 1 FROM tCarrito WHERE	Consecutivo = @Consecutivo
+											AND IdProducto = @IdProducto)
+	BEGIN
+
+		INSERT INTO tCarrito(Consecutivo,IdProducto,Cantidad,Fecha)
+		VALUES (@Consecutivo,@IdProducto,@Cantidad,GETDATE())
+
+	END
+	ELSE
+	BEGIN
+
+		UPDATE tCarrito
+		SET Cantidad = @Cantidad
+		WHERE	Consecutivo = @Consecutivo
+			AND IdProducto = @IdProducto 
+
+	END
 
 END
 GO

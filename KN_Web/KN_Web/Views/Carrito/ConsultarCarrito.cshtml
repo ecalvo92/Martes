@@ -1,4 +1,4 @@
-﻿@model List<KN_Web.BaseDatos.tUsuario>
+﻿@model List<KN_Web.BaseDatos.ConsultarCarrito_Result>
 
 @{
     ViewBag.Title = "ConsultarUsuarios";
@@ -6,7 +6,7 @@
 }
 
 <br>
-<h4>Consulta de usuarios</h4>
+<h4>Mi Carrito</h4>
 <hr>
 <br>
 
@@ -20,47 +20,57 @@
             </div>
         }
 
-        <table id="tablaUsuarios" class="table table-bordered table-hover">
+        <table id="tablaCarrito" class="table table-bordered table-hover">
             <thead>
                 <tr>
-                    <th>Identificación</th>
-                    <th>Nombre</th>
-                    <th>Correo</th>
-                    <th>Estado</th>
-                    <th>Cambiar Estado</th>
-                    <th>Cambiar Información</th>
+                    <th>Producto</th>
+                    <th>Precio Unitario</th>
+                    <th>Cantidad</th>
+                    <th>SubTotal</th>
+                    <th>Impuesto</th>
+                    <th>Total</th>
+                    <th>Eliminar</th>
                 </tr>
             </thead>
             <tbody>
                 @foreach (var item in Model)
                 {
                     <tr>
-                        <td>@item.Identificacion</td>
-                        <td>@item.Nombre</td>
-                        <td>@item.Correo</td>
-                        @if (item.Estado)
-                        {
-                            <td>Activo</td>
-                        }
-                        else
-                        {
-                            <td>Inactivo</td>
-                        }
+                        <td>@item.Descripcion</td>
+                        <td>@item.Precio.ToString("N2")</td>
+                        <td>@item.Cantidad</td>
+                        <td>@item.SubTotal.Value.ToString("N2")</td>
+                        <td>@item.Impuesto.Value.ToString("N2")</td>
+                        <td>@item.Total.Value.ToString("N2")</td>
+
                         <td style="text-align:center">
                             <button type="button" class="btn btn-primary AbrirModal" data-toggle="modal" data-target="#ModalUsuarios"
                                     data-id="@item.Consecutivo" data-name="@item.Nombre">
                                 <i class="fa fa-share-square"></i>
                             </button>
                         </td>
-                        <td style="text-align:center">
-                            <a class="btn btn-primary" href="@Url.Action("ActualizarUsuario","Usuario", new { Consecutivo = item.Consecutivo })">
-                                <i class="fa fa-user"></i>
-                            </a>
-                        </td>
+
                     </tr>
                 }
             </tbody>
         </table>
+
+        <br /><br />
+
+        <div class="row">
+            <div class="col-3">
+                <p style="font-size:14pt; margin-top:2%">El monto a cancelar es de: ¢<b>@decimal.Parse(Session["Total"].ToString()).ToString("N2")</b></p>
+            </div>
+            <div>
+                @if (Session["Total"].ToString() != "0")
+                {
+                    using(Html.BeginForm("PagarCarrito","Carrito"))
+                    { 
+                       <button type="submit" class="btn btn-outline-primary" style="width:200px">Pagar</button>
+                    }
+                }
+            </div>
+        </div>
 
     </div>
 </div>
@@ -92,11 +102,11 @@
 <script src="~/root/plugins/jquery/jquery.min.js"></script>
 <script>
     $(document).ready(function () {
-        $("#tablaUsuarios").DataTable({
+        $("#tablaCarrito").DataTable({
             language: {
                 url: '//cdn.datatables.net/plug-ins/2.0.2/i18n/es-ES.json'
             },
-            columnDefs: [{ type: 'string', target: [0, 1, 2, 3] }]
+            columnDefs: [{ type: 'string', target: [0, 1, 2, 3, 4, 5] }]
         });
     })
 
