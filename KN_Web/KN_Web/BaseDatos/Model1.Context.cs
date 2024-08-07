@@ -131,5 +131,14 @@ namespace KN_Web.BaseDatos
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("RegistrarCarrito", consecutivoParameter, idProductoParameter, cantidadParameter);
         }
+    
+        public virtual ObjectResult<ConsultarCarrito_Result> ConsultarCarrito(Nullable<int> consecutivo)
+        {
+            var consecutivoParameter = consecutivo.HasValue ?
+                new ObjectParameter("Consecutivo", consecutivo) :
+                new ObjectParameter("Consecutivo", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<ConsultarCarrito_Result>("ConsultarCarrito", consecutivoParameter);
+        }
     }
 }

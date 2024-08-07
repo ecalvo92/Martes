@@ -1,6 +1,7 @@
 ﻿using KN_Web.Entidades;
 using KN_Web.Models;
 using System;
+using System.Linq;
 using System.Web.Mvc;
 
 namespace KN_Web.Controllers
@@ -125,16 +126,25 @@ namespace KN_Web.Controllers
         [HttpGet]
         public ActionResult Home()
         {
+            var carritoActual = carritoM.ConsultarCarrito();
+            Session["Cantidad"] = carritoActual.Sum(c => c.Cantidad);
+            Session["SubTotal"] = carritoActual.Sum(c => c.SubTotal);
+
             var respuesta = productoM.ConsultarProductos();
             return View(respuesta);
         }
 
         [FiltroSeguridad]
         [HttpPost]
-        public ActionResult RegistrarCarrito()
+        public ActionResult RegistrarCarrito(int IdProducto, int Cantidad)
         {
-            carritoM.RegistrarCarrito(0,0);
-            return View();
+            carritoM.RegistrarCarrito(IdProducto, Cantidad);
+
+            var carritoActual = carritoM.ConsultarCarrito();
+            Session["Cantidad"] = carritoActual.Sum(c => c.Cantidad);
+            Session["SubTotal"] = carritoActual.Sum(c => c.SubTotal);
+
+            return Json("",JsonRequestBehavior.AllowGet);
         }
 
     }

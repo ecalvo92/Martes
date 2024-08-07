@@ -21,5 +21,15 @@ namespace KN_Web.Models
 
             return (rowsAffected > 0 ? true : false);
         }
+
+        public List<ConsultarCarrito_Result> ConsultarCarrito()
+        {
+            using (var context = new MARTES_BDEntities())
+            {
+                int Consecutivo = int.Parse(HttpContext.Current.Session["ConsecutivoUsuario"].ToString());
+                return context.ConsultarCarrito(Consecutivo).ToList();
+            }
+        }
+
     }
 }

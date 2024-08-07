@@ -36,18 +36,18 @@
                                 <li class="list-group-item"> <h5 class="card-title">@item.Descripcion</h5></li>
                                 <li class="list-group-item">Categoría: @item.tCategoria.Descripcion</li>
                                 <li class="list-group-item">Inventario: @item.Inventario</li>
-                                <li class="list-group-item">Precio: @item.Precio.ToString("N2")</li>
+                                <li class="list-group-item">Precio: ¢ @item.Precio.ToString("N2")</li>
                             </ul>
 
                             <div class="card-body row">
                                 <div class="col-2">
                                 </div>
-                                <div class="col-4">
+                                <div class="col-3">
                                     <input id=prd-@item.IdProducto type="number" class="form-control" style="text-align:center" value="1" min="1" max="@item.Inventario"
                                            onkeypress="return ValidarNumeros(this.id)">
                                 </div>
-                                <div class="col-4">
-                                    <a onclick="AgregarProducto(@item.IdProducto, @item.Inventario);" class="card-link btn btn-outline-primary">Agregar</a>
+                                <div class="col-5">
+                                    <a onclick="AgregarProducto(@item.IdProducto, @item.Inventario);" class="card-link btn btn-outline-primary">Añadir al Carrito</a>
                                 </div>
                             </div>
 
@@ -88,16 +88,42 @@
             return;
         }
 
-        //Ajax para llamar al controlador y que se registre el producto en el carrito
+        $.ajax({
+            type: 'POST',
+            url: '/Login/RegistrarCarrito',
+            dataType: 'json',
+            data: {
+                "IdProducto": IdProducto,
+                "Cantidad": cantidadIngresada
+            },
+            success: function (data) {
+                MostrarMensaje("Información", "Producto añadido correctamente", "success");
+
+            }
+        });
 
     }
 
     function MostrarMensaje(titulo, mensaje, icono) {
+        //Swal.fire({
+        //    title: titulo,
+        //    text: mensaje,
+        //    icon: icono
+        //});
+
         Swal.fire({
             title: titulo,
+            showDenyButton: false,
+            showCancelButton: false,
+            confirmButtonText: "Aceptar",
             text: mensaje,
             icon: icono
+        }).then((result) => {
+            if (result.isConfirmed) {
+                window.location.href = '/Login/Home';
+            }
         });
+
     }
 
 </script>
